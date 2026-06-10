@@ -1,7 +1,5 @@
 import type { StreamDelta } from "./types";
-
-const API_URL =
-  import.meta.env.VITE_API_URL ?? "http://localhost:3001/events/stream";
+import { API_URL } from "./config";
 
 export async function streamChatResponse(
   prompt: string,

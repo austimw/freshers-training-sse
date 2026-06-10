@@ -1,6 +1,6 @@
 services:
   - type: web
-    name: keyvalue-sse-bot
+    name: freshers-training-sse
     runtime: node
     rootDir: server
     buildCommand: npm install && npm run build
@@ -9,3 +9,13 @@ services:
     envVars:
       - key: NODE_VERSION
         value: "22"
+
+  - type: web
+    name: freshers-training-sse-web
+    runtime: static
+    rootDir: client
+    buildCommand: npm install && npm run build
+    staticPublishPath: dist
+    envVars:
+      - key: VITE_API_URL
+        value: https://freshers-training-sse.onrender.com/events/stream

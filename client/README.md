@@ -29,13 +29,14 @@ Open [http://localhost:5173](http://localhost:5173), click the **chat bubble** o
 
 ## Configure API URL
 
-Default: `http://localhost:3001/events/stream`
+| Environment | URL |
+|-------------|-----|
+| **Production** (`.env.production`) | `https://freshers-training-sse.onrender.com/events/stream` |
+| **Local dev** (default) | `http://localhost:3001/events/stream` |
 
-Override with `.env`:
+For local overrides, copy `.env.example` to `.env.local`.
 
-```
-VITE_API_URL=https://your-deployed-api.onrender.com/events/stream
-```
+Deploy instructions: [`DEPLOY.md`](DEPLOY.md)
 
 ## Build
 

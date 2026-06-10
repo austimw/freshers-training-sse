@@ -1,4 +1,5 @@
 import { ChatWidget } from "./components/ChatWidget";
+import { API_URL } from "./config";
 import "./App.css";
 
 export default function App() {
@@ -13,7 +14,9 @@ export default function App() {
           bubble on the right to talk to the bot.
         </p>
         <ul>
-          <li>Start the API: <code>cd server && npm run dev</code></li>
+          <li>
+            API: <code>{API_URL}</code>
+          </li>
           <li>Try prompts: hello, react, how are you, who are you, thank you</li>
         </ul>
       </main>

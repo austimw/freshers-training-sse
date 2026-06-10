@@ -81,14 +81,15 @@ See [`server/README.md`](server/README.md) for supported prompts, curl examples,
 
 ## React training app
 
-A reference React implementation lives in [`client/`](client/) with `streamChatResponse`, `useSSE`, and a floating chat bubble UI.
+Live API: `https://freshers-training-sse.onrender.com/events/stream`
+
+Reference React app in [`client/`](client/) with `streamChatResponse`, `useSSE`, and a floating chat bubble.
 
 ```bash
-# Terminal 1
-cd server && npm run dev
-
-# Terminal 2
+# Local dev (optional local API in another terminal)
 cd client && npm install && npm run dev
 ```
 
-Open [http://localhost:5173](http://localhost:5173) and click the chat bubble on the right.
+Open [http://localhost:5173](http://localhost:5173). Production build uses the Render API automatically.
+
+Deploy the web app: [`client/DEPLOY.md`](client/DEPLOY.md)
