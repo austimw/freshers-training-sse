@@ -29,7 +29,7 @@ Ensure `assets/logo.png` is included in the repo.
 | 9–15 | Integration checklist, API contract, `streamChatResponse`, buffering, React, `useSSE`, chat UI |
 | 16–19 | States, errors, reconnection, pitfalls |
 | 20 | Practice + reveal solution |
-| 21 | Mock streaming chat demo |
+| 21 | Live streaming chat demo |
 | 22 | Summary |
 
 ## Regenerate `index.html`
@@ -44,12 +44,18 @@ Styles are copied from the reference training deck template.
 
 ## SSE Chatbot API (backend)
 
-A Node/Express SSE server lives in [`server/`](server/). Students integrate against:
+A Node/Express SSE server lives in [`server/`](server/). Students integrate against the live endpoint:
+
+```
+POST https://freshers-training-sse.onrender.com/events/stream
+Body: { "content": "<user prompt>" }
+Stream: data: {"content":"...","type":"delta"} lines, then [DONE]
+```
+
+Local API (optional):
 
 ```
 POST http://localhost:3001/events/stream
-Body: { "content": "<user prompt>" }
-Stream: data: {"content":"...","type":"delta"} lines, then [DONE]
 ```
 
 Run locally:
@@ -62,17 +68,18 @@ npm run dev
 
 **Test without building a React app:**
 
-1. Terminal 1 — keep the API running (`npm run dev` in `server/`).
-2. Terminal 2 — serve the slide deck:
+1. Serve the slide deck:
    ```bash
    python3 -m http.server 8080
    ```
-3. Open [http://localhost:8080](http://localhost:8080), go to slide **21 (Live Demo)**, type `hello`, and click **Send**.
+2. Open [http://localhost:8080](http://localhost:8080), go to slide **21 (Live Demo)**, type `hello`, and click **Send**.
+
+The slide demo calls the live API at `https://freshers-training-sse.onrender.com/events/stream`.
 
 Or use curl:
 
 ```bash
-curl -N -X POST http://localhost:3001/events/stream \
+curl -N -X POST https://freshers-training-sse.onrender.com/events/stream \
   -H "Content-Type: application/json" \
   -d '{"content":"hello"}'
 ```

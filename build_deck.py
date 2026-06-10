@@ -4,6 +4,7 @@
 from pathlib import Path
 
 ROOT = Path(__file__).parent
+API_STREAM_URL = "https://freshers-training-sse.onrender.com/events/stream"
 head = (ROOT / "_styles_head.txt").read_text()
 head = head.replace(
     "<title>Immutability, Closures & Callbacks — JavaScript Training</title>",
@@ -232,19 +233,18 @@ source.<span class="fn">close</span>();</code></pre>
     <section class="slide" data-title="API Contract">
         <div class="slide-label">Integration</div>
         <h2>API Contract — Chat Bot</h2>
-        <p>Example backend our React app expects (you will implement the server later):</p>
+        <p>Live training API endpoint:</p>
         <pre><code><span class="cmt">// Request</span>
-POST /events/stream
+POST https://freshers-training-sse.onrender.com/events/stream
 Content-Type: application/json
 
-{ <span class="str">"content"</span>: <span class="str">"Explain SSE in one sentence"</span> }
+{ <span class="str">"content"</span>: <span class="str">"hello"</span> }
 
 <span class="cmt">// Response (stream)</span>
 Content-Type: text/event-stream
 
-data: {"content":"Server","type":"delta"}
-data: {"content":"-Sent","type":"delta"}
-data: {"content":" Events","type":"delta"}
+data: {"content":"Hi!","type":"delta"}
+data: {"content":" Welcome","type":"delta"}
 data: [DONE]</code></pre>
         <div class="ref-diagram">User prompt &rarr; POST &rarr; Server streams <span class="inline-code">data:</span> lines &rarr; UI grows message</div>
     </section>
@@ -258,7 +258,7 @@ data: [DONE]</code></pre>
   onStreamData: (text: <span class="kw">string</span>, type?: <span class="kw">string</span>) =&gt; <span class="kw">void</span>,
   signal?: AbortSignal
 ): <span class="kw">Promise</span>&lt;<span class="kw">string</span>&gt; {
-  <span class="kw">const</span> response = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'http://localhost:3001/events/stream'</span>, {
+  <span class="kw">const</span> response = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'https://freshers-training-sse.onrender.com/events/stream'</span>, {
     method: <span class="str">'POST'</span>,
     headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> },
     body: JSON.<span class="fn">stringify</span>({ content: prompt }),
@@ -507,7 +507,7 @@ buffer = lines.<span class="fn">pop</span>() ?? <span class="str">''</span>; <sp
   onStreamData: (text: <span class="kw">string</span>, type?: <span class="kw">string</span>) =&gt; <span class="kw">void</span>,
   signal?: AbortSignal
 ): <span class="kw">Promise</span>&lt;<span class="kw">string</span>&gt; {
-  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'http://localhost:3001/events/stream'</span>, {
+  <span class="kw">const</span> res = <span class="kw">await</span> <span class="fn">fetch</span>(<span class="str">'https://freshers-training-sse.onrender.com/events/stream'</span>, {
     method: <span class="str">'POST'</span>,
     headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> },
     body: JSON.<span class="fn">stringify</span>({ content: prompt }),
@@ -539,7 +539,7 @@ buffer = lines.<span class="fn">pop</span>() ?? <span class="str">''</span>; <sp
     <section class="slide" data-title="Live Demo">
         <div class="slide-label">Try It</div>
         <h2>Live Demo — Keyvalue Chatbot</h2>
-        <p class="dim" style="margin-bottom:8px;">Streams from <span class="inline-code">http://localhost:3001/events/stream</span> — start the server with <span class="inline-code">cd server && npm run dev</span>.</p>
+        <p class="dim" style="margin-bottom:8px;">Streams from the live API at <span class="inline-code">https://freshers-training-sse.onrender.com/events/stream</span>.</p>
         <div class="chat-demo">
             <div class="chat-panel">
                 <h3>Chat UI</h3>
@@ -585,9 +585,9 @@ buffer = lines.<span class="fn">pop</span>() ?? <span class="str">''</span>; <sp
             <div class="card">
                 <h3>Next step</h3>
                 <ul>
-                    <li>Implement backend stream</li>
-                    <li>Point URL to real API</li>
-                    <li>Swap mock demo for live stream</li>
+                    <li>Build your own <span class="inline-code">streamChatResponse</span></li>
+                    <li>Wire up <span class="inline-code">useSSE</span> in React</li>
+                    <li>Try the live demo on slide 21</li>
                 </ul>
             </div>
         </div>
@@ -615,7 +615,7 @@ footer = r'''
     const slides = document.querySelectorAll('.slide');
     const total = slides.length;
     let current = 0;
-    const CHAT_API_URL = 'http://localhost:3001/events/stream';
+    const CHAT_API_URL = 'https://freshers-training-sse.onrender.com/events/stream';
     let demoAbort = null;
 
     function showSlide(index) {
